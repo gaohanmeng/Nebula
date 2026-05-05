@@ -80,19 +80,23 @@ public class CasdoorAuthenticationServiceImpl implements AuthenticationService {
             if (StringUtils.hasText(phone)) {
                 casdoorUser = casdoorUserExtendService.getUserByPhone(phone);
             } else {
-                // 跨组织搜索并用密码匹配唯一用户
-                casdoorUser = casdoorUserExtendService.findUserByNameAndPassword(
-                        loginName, loginDto.getPassword());
-                if (casdoorUser == null) {
-                    log.warn("Casdoor 预验证失败：账号不存在或密码错误，用户名：{}", loginName);
-                    throw new ServiceException("账号或密码错误");
+                // 1. 先走原始查找（兼容 built-in 组织用户如 admin）
+                casdoorUser = casdoorUserExtendService.getUser(loginName);
+                // 2. 原始查找失败则跨组织搜索并用密码匹配唯一用户
+                if (casdoorUser == null || !StringUtils.hasText(casdoorUser.name)) {
+                    casdoorUser = casdoorUserExtendService.findUserByNameAndPassword(
+                            loginName, loginDto.getPassword());
+                    if (casdoorUser == null) {
+                        log.warn("Casdoor 预验证失败：账号不存在或密码错误，用户名：{}", loginName);
+                        throw new ServiceException("账号或密码错误");
+                    }
+                    // 跨组织匹配成功，密码已验证，直接返回临时凭证
+                    String tempToken2 = UUID.randomUUID().toString().replace("-", "");
+                    String cacheKey2 = TEMP_TOKEN_PREFIX + tempToken2;
+                    RedisUtils.set(cacheKey2, objectMapper.writeValueAsString(loginDto), TEMP_TOKEN_EXPIRE_SECONDS);
+                    log.info("Casdoor 预验证成功，用户名：{}，临时凭证已生成", loginName);
+                    return tempToken2;
                 }
-                // 用户名登录已在 findUserByNameAndPassword 中验证密码，跳过后续密码检查
-                String tempToken2 = UUID.randomUUID().toString().replace("-", "");
-                String cacheKey2 = TEMP_TOKEN_PREFIX + tempToken2;
-                RedisUtils.set(cacheKey2, objectMapper.writeValueAsString(loginDto), TEMP_TOKEN_EXPIRE_SECONDS);
-                log.info("Casdoor 预验证成功，用户名：{}，临时凭证已生成", loginName);
-                return tempToken2;
             }
 
             if (casdoorUser == null || !StringUtils.hasText(casdoorUser.name)) {

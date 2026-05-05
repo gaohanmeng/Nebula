@@ -53,19 +53,23 @@ public class CasdoorUserExtendService extends UserService {
      */
     private List<User> getUsersByNameAcrossOrgs(String name) throws IOException {
         List<User> result = new ArrayList<>();
-        OrganizationService orgService = new OrganizationService(config);
-        List<Organization> orgs = orgService.getOrganizations();
-        for (Organization org : orgs) {
-            try {
-                CasdoorResponse<User, Object> resp = doGet("get-user",
-                        Map.of("userId", org.name + "/" + name),
-                        new TypeReference<CasdoorResponse<User, Object>>() {});
-                User user = objectMapper.convertValue(resp.getData(), User.class);
-                if (user != null && user.name != null) {
-                    result.add(user);
+        try {
+            OrganizationService orgService = new OrganizationService(config);
+            List<Organization> orgs = orgService.getOrganizations();
+            for (Organization org : orgs) {
+                try {
+                    CasdoorResponse<User, Object> resp = doGet("get-user",
+                            Map.of("userId", org.name + "/" + name),
+                            new TypeReference<CasdoorResponse<User, Object>>() {});
+                    User user = objectMapper.convertValue(resp.getData(), User.class);
+                    if (user != null && user.name != null) {
+                        result.add(user);
+                    }
+                } catch (Exception ignored) {
                 }
-            } catch (Exception ignored) {
             }
+        } catch (Exception e) {
+            // 无法获取组织列表时返回空，交由调用方降级处理
         }
         return result;
     }
