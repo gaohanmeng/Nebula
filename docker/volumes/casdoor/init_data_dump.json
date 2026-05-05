@@ -2,379 +2,6 @@
   "organizations": [
     {
       "owner": "admin",
-      "name": "Nebula",
-      "createdTime": "2025-09-20T18:48:24+08:00",
-      "displayName": "Nebula",
-      "websiteUrl": "https://door.casdoor.com",
-      "logo": "",
-      "logoDark": "",
-      "favicon": "https://cdn.casbin.org/img/favicon.png",
-      "hasPrivilegeConsent": false,
-      "passwordType": "plain",
-      "passwordSalt": "",
-      "passwordOptions": [
-        "AtLeast6"
-      ],
-      "passwordObfuscatorType": "Plain",
-      "passwordObfuscatorKey": "",
-      "passwordExpireDays": 0,
-      "countryCodes": [
-        "CN"
-      ],
-      "defaultAvatar": "https://cdn.casbin.org/img/casbin.svg",
-      "defaultApplication": "NebulaRPA",
-      "userTypes": null,
-      "tags": [],
-      "languages": [
-        "en",
-        "es",
-        "fr",
-        "de",
-        "zh",
-        "id",
-        "ja",
-        "ko",
-        "ru",
-        "vi",
-        "pt",
-        "it",
-        "ms",
-        "tr",
-        "ar",
-        "he",
-        "nl",
-        "pl",
-        "fi",
-        "sv",
-        "uk",
-        "kk",
-        "fa",
-        "cs",
-        "sk",
-        "az"
-      ],
-      "themeData": null,
-      "masterPassword": "",
-      "defaultPassword": "",
-      "masterVerificationCode": "",
-      "ipWhitelist": "",
-      "initScore": 0,
-      "enableSoftDeletion": false,
-      "isProfilePublic": true,
-      "useEmailAsUsername": false,
-      "enableTour": true,
-      "disableSignin": false,
-      "ipRestriction": "",
-      "navItems": null,
-      "widgetItems": null,
-      "mfaItems": null,
-      "mfaRememberInHours": 12,
-      "accountItems": [
-        {
-          "name": "Organization",
-          "visible": true,
-          "viewRule": "Public",
-          "modifyRule": "Admin",
-          "regex": ""
-        },
-        {
-          "name": "ID",
-          "visible": true,
-          "viewRule": "Public",
-          "modifyRule": "Immutable",
-          "regex": ""
-        },
-        {
-          "name": "Name",
-          "visible": true,
-          "viewRule": "Public",
-          "modifyRule": "Admin",
-          "regex": ""
-        },
-        {
-          "name": "Display name",
-          "visible": true,
-          "viewRule": "Public",
-          "modifyRule": "Self",
-          "regex": ""
-        },
-        {
-          "name": "Avatar",
-          "visible": true,
-          "viewRule": "Public",
-          "modifyRule": "Self",
-          "regex": ""
-        },
-        {
-          "name": "User type",
-          "visible": true,
-          "viewRule": "Public",
-          "modifyRule": "Admin",
-          "regex": ""
-        },
-        {
-          "name": "Password",
-          "visible": true,
-          "viewRule": "Self",
-          "modifyRule": "Self",
-          "regex": ""
-        },
-        {
-          "name": "Email",
-          "visible": true,
-          "viewRule": "Public",
-          "modifyRule": "Self",
-          "regex": ""
-        },
-        {
-          "name": "Phone",
-          "visible": true,
-          "viewRule": "Public",
-          "modifyRule": "Self",
-          "regex": ""
-        },
-        {
-          "name": "Country code",
-          "visible": true,
-          "viewRule": "Public",
-          "modifyRule": "Self",
-          "regex": ""
-        },
-        {
-          "name": "Country/Region",
-          "visible": true,
-          "viewRule": "Public",
-          "modifyRule": "Self",
-          "regex": ""
-        },
-        {
-          "name": "Location",
-          "visible": true,
-          "viewRule": "Public",
-          "modifyRule": "Self",
-          "regex": ""
-        },
-        {
-          "name": "Address",
-          "visible": true,
-          "viewRule": "Public",
-          "modifyRule": "Self",
-          "regex": ""
-        },
-        {
-          "name": "Affiliation",
-          "visible": true,
-          "viewRule": "Public",
-          "modifyRule": "Self",
-          "regex": ""
-        },
-        {
-          "name": "Title",
-          "visible": true,
-          "viewRule": "Public",
-          "modifyRule": "Self",
-          "regex": ""
-        },
-        {
-          "name": "ID card type",
-          "visible": true,
-          "viewRule": "Public",
-          "modifyRule": "Self",
-          "regex": ""
-        },
-        {
-          "name": "ID card",
-          "visible": true,
-          "viewRule": "Public",
-          "modifyRule": "Self",
-          "regex": ""
-        },
-        {
-          "name": "ID card info",
-          "visible": true,
-          "viewRule": "Public",
-          "modifyRule": "Self",
-          "regex": ""
-        },
-        {
-          "name": "Homepage",
-          "visible": true,
-          "viewRule": "Public",
-          "modifyRule": "Self",
-          "regex": ""
-        },
-        {
-          "name": "Bio",
-          "visible": true,
-          "viewRule": "Public",
-          "modifyRule": "Self",
-          "regex": ""
-        },
-        {
-          "name": "Tag",
-          "visible": true,
-          "viewRule": "Public",
-          "modifyRule": "Admin",
-          "regex": ""
-        },
-        {
-          "name": "Language",
-          "visible": true,
-          "viewRule": "Public",
-          "modifyRule": "Admin",
-          "regex": ""
-        },
-        {
-          "name": "Gender",
-          "visible": true,
-          "viewRule": "Public",
-          "modifyRule": "Admin",
-          "regex": ""
-        },
-        {
-          "name": "Birthday",
-          "visible": true,
-          "viewRule": "Public",
-          "modifyRule": "Admin",
-          "regex": ""
-        },
-        {
-          "name": "Education",
-          "visible": true,
-          "viewRule": "Public",
-          "modifyRule": "Admin",
-          "regex": ""
-        },
-        {
-          "name": "Score",
-          "visible": true,
-          "viewRule": "Public",
-          "modifyRule": "Admin",
-          "regex": ""
-        },
-        {
-          "name": "Karma",
-          "visible": true,
-          "viewRule": "Public",
-          "modifyRule": "Admin",
-          "regex": ""
-        },
-        {
-          "name": "Ranking",
-          "visible": true,
-          "viewRule": "Public",
-          "modifyRule": "Admin",
-          "regex": ""
-        },
-        {
-          "name": "Signup application",
-          "visible": true,
-          "viewRule": "Public",
-          "modifyRule": "Admin",
-          "regex": ""
-        },
-        {
-          "name": "API key",
-          "visible": false,
-          "viewRule": "",
-          "modifyRule": "Self",
-          "regex": ""
-        },
-        {
-          "name": "Groups",
-          "visible": true,
-          "viewRule": "Public",
-          "modifyRule": "Admin",
-          "regex": ""
-        },
-        {
-          "name": "Roles",
-          "visible": true,
-          "viewRule": "Public",
-          "modifyRule": "Immutable",
-          "regex": ""
-        },
-        {
-          "name": "Permissions",
-          "visible": true,
-          "viewRule": "Public",
-          "modifyRule": "Immutable",
-          "regex": ""
-        },
-        {
-          "name": "3rd-party logins",
-          "visible": true,
-          "viewRule": "Self",
-          "modifyRule": "Self",
-          "regex": ""
-        },
-        {
-          "name": "Properties",
-          "visible": false,
-          "viewRule": "Admin",
-          "modifyRule": "Admin",
-          "regex": ""
-        },
-        {
-          "name": "Is online",
-          "visible": true,
-          "viewRule": "Admin",
-          "modifyRule": "Admin",
-          "regex": ""
-        },
-        {
-          "name": "Is admin",
-          "visible": true,
-          "viewRule": "Admin",
-          "modifyRule": "Admin",
-          "regex": ""
-        },
-        {
-          "name": "Is forbidden",
-          "visible": true,
-          "viewRule": "Admin",
-          "modifyRule": "Admin",
-          "regex": ""
-        },
-        {
-          "name": "Is deleted",
-          "visible": true,
-          "viewRule": "Admin",
-          "modifyRule": "Admin",
-          "regex": ""
-        },
-        {
-          "name": "Multi-factor authentication",
-          "visible": true,
-          "viewRule": "Self",
-          "modifyRule": "Self",
-          "regex": ""
-        },
-        {
-          "name": "WebAuthn credentials",
-          "visible": true,
-          "viewRule": "Self",
-          "modifyRule": "Self",
-          "regex": ""
-        },
-        {
-          "name": "Managed accounts",
-          "visible": true,
-          "viewRule": "Self",
-          "modifyRule": "Self",
-          "regex": ""
-        },
-        {
-          "name": "MFA accounts",
-          "visible": true,
-          "viewRule": "Self",
-          "modifyRule": "Self",
-          "regex": ""
-        }
-      ]
-    },
-    {
-      "owner": "admin",
       "name": "built-in",
       "createdTime": "2025-09-20T10:47:17Z",
       "displayName": "Built-in Organization",
@@ -951,7 +578,8 @@
       "clientId": "fa825ba81abffab1acde",
       "clientSecret": "321d8737f87192df55f9538aebc69676be296e0c77bc439e3f1e8fe5",
       "redirectUris": [
-        "https://tauri.localhost/","http://localhost:1420/"
+        "https://tauri.localhost/",
+        "http://localhost:1420/"
       ],
       "forcedRedirectOrigin": "",
       "tokenFormat": "JWT",
@@ -1188,7 +816,7 @@
   ],
   "users": [
     {
-      "owner": "Nebula",
+      "owner": "built-in",
       "name": "example-user",
       "createdTime": "2025-09-20T10:56:21Z",
       "updatedTime": "2025-09-20T10:57:09Z",
@@ -1603,7 +1231,7 @@
       "createdTime": "2025-09-20T10:47:18Z",
       "displayName": "API Model",
       "description": "",
-      "modelText": "[request_definition]\nr = subOwner, subName, method, urlPath, objOwner, objName\n\n[policy_definition]\np = subOwner, subName, method, urlPath, objOwner, objName\n\n[role_definition]\ng = _, _\n\n[policy_effect]\ne = some(where (p.eft == allow))\n\n[matchers]\nm = (r.subOwner == p.subOwner || p.subOwner == \"*\") \u0026\u0026 \\\n    (r.subName == p.subName || p.subName == \"*\" || r.subName != \"anonymous\" \u0026\u0026 p.subName == \"!anonymous\") \u0026\u0026 \\\n    (r.method == p.method || p.method == \"*\") \u0026\u0026 \\\n    (r.urlPath == p.urlPath || p.urlPath == \"*\") \u0026\u0026 \\\n    (r.objOwner == p.objOwner || p.objOwner == \"*\") \u0026\u0026 \\\n    (r.objName == p.objName || p.objName == \"*\") || \\\n    (r.subOwner == r.objOwner \u0026\u0026 r.subName == r.objName)"
+      "modelText": "[request_definition]\nr = subOwner, subName, method, urlPath, objOwner, objName\n\n[policy_definition]\np = subOwner, subName, method, urlPath, objOwner, objName\n\n[role_definition]\ng = _, _\n\n[policy_effect]\ne = some(where (p.eft == allow))\n\n[matchers]\nm = (r.subOwner == p.subOwner || p.subOwner == \"*\") && \\\n    (r.subName == p.subName || p.subName == \"*\" || r.subName != \"anonymous\" && p.subName == \"!anonymous\") && \\\n    (r.method == p.method || p.method == \"*\") && \\\n    (r.urlPath == p.urlPath || p.urlPath == \"*\") && \\\n    (r.objOwner == p.objOwner || p.objOwner == \"*\") && \\\n    (r.objName == p.objName || p.objName == \"*\") || \\\n    (r.subOwner == r.objOwner && r.subName == r.objName)"
     },
     {
       "owner": "built-in",
@@ -1611,7 +1239,7 @@
       "createdTime": "2025-09-20T10:47:18Z",
       "displayName": "Built-in Model",
       "description": "",
-      "modelText": "[request_definition]\nr = sub, obj, act\n\n[policy_definition]\np = sub, obj, act\n\n[role_definition]\ng = _, _\n\n[policy_effect]\ne = some(where (p.eft == allow))\n\n[matchers]\nm = g(r.sub, p.sub) \u0026\u0026 r.obj == p.obj \u0026\u0026 r.act == p.act"
+      "modelText": "[request_definition]\nr = sub, obj, act\n\n[policy_definition]\np = sub, obj, act\n\n[role_definition]\ng = _, _\n\n[policy_effect]\ne = some(where (p.eft == allow))\n\n[matchers]\nm = g(r.sub, p.sub) && r.obj == p.obj && r.act == p.act"
     }
   ],
   "permissions": [
@@ -1651,13 +1279,13 @@
   "resources": [],
   "roles": [
     {
-      "owner": "Nebula",
+      "owner": "built-in",
       "name": "example-role",
       "createdTime": "2025-09-20T18:58:05+08:00",
       "displayName": "示例角色",
       "description": "",
       "users": [
-        "Nebula/example-user"
+        "built-in/example-user"
       ],
       "groups": [],
       "roles": [],
@@ -1785,7 +1413,9 @@
       "method": "POST",
       "contentType": "application/json",
       "headers": [],
-      "events": ["signup"],
+      "events": [
+        "signup"
+      ],
       "tokenFields": null,
       "objectFields": null,
       "isUserExtended": false,
