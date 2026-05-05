@@ -80,7 +80,19 @@ public class CasdoorAuthenticationServiceImpl implements AuthenticationService {
             if (StringUtils.hasText(phone)) {
                 casdoorUser = casdoorUserExtendService.getUserByPhone(phone);
             } else {
-                casdoorUser = casdoorUserExtendService.getUser(loginName);
+                // 跨组织搜索并用密码匹配唯一用户
+                casdoorUser = casdoorUserExtendService.findUserByNameAndPassword(
+                        loginName, loginDto.getPassword());
+                if (casdoorUser == null) {
+                    log.warn("Casdoor 预验证失败：账号不存在或密码错误，用户名：{}", loginName);
+                    throw new ServiceException("账号或密码错误");
+                }
+                // 用户名登录已在 findUserByNameAndPassword 中验证密码，跳过后续密码检查
+                String tempToken2 = UUID.randomUUID().toString().replace("-", "");
+                String cacheKey2 = TEMP_TOKEN_PREFIX + tempToken2;
+                RedisUtils.set(cacheKey2, objectMapper.writeValueAsString(loginDto), TEMP_TOKEN_EXPIRE_SECONDS);
+                log.info("Casdoor 预验证成功，用户名：{}，临时凭证已生成", loginName);
+                return tempToken2;
             }
 
             if (casdoorUser == null || !StringUtils.hasText(casdoorUser.name)) {
@@ -285,15 +297,20 @@ public class CasdoorAuthenticationServiceImpl implements AuthenticationService {
         try {
             log.info("开始Casdoor注册，手机号：{}，用户名：{}", registerDto.getPhone(), registerDto.getLoginName());
 
+            // 确定用户名（优先登录名，回退手机号）
+            String username = StringUtils.hasText(registerDto.getLoginName())
+                    ? registerDto.getLoginName().trim()
+                    : registerDto.getPhone().trim();
+            // 全局检查用户名是否已被注册（防止跨组织重名）
+            if (casdoorUserExtendService.isUserNameExistsGlobally(username)) {
+                throw new ServiceException("该用户名已被注册，请更换用户名");
+            }
+
             // 1. 构建Casdoor注册请求（优先使用前端传入的组织，回退到配置默认值）
             CasdoorSignupDto signupDto = new CasdoorSignupDto();
             signupDto.setApplication(applicationName);
             signupDto.setOrganization(StringUtils.hasText(registerDto.getTenantId())
                     ? registerDto.getTenantId() : organizationName);
-            // 如果没有提供登录名，使用手机号作为登录名
-            String username = StringUtils.hasText(registerDto.getLoginName())
-                    ? registerDto.getLoginName()
-                    : registerDto.getPhone();
             signupDto.setUsername(username);
             signupDto.setName(username); // name字段也使用用户名
             signupDto.setPassword(registerDto.getPassword());
