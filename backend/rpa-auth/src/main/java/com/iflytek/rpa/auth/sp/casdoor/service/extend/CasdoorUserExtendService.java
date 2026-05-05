@@ -94,6 +94,14 @@ public class CasdoorUserExtendService extends UserService {
     }
 
     /**
+     * 跨所有组织按用户名查找用户（不需要密码），返回第一个匹配。
+     */
+    public User getUserAcrossOrgs(String name) throws IOException {
+        List<User> users = getUsersByNameAcrossOrgs(name);
+        return users.isEmpty() ? null : users.get(0);
+    }
+
+    /**
      * 全局检查用户名是否已被注册（跨所有组织）
      */
     public boolean isUserNameExistsGlobally(String name) throws IOException {

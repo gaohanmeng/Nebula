@@ -76,12 +76,20 @@ public class CasdoorAuthenticationServiceImpl implements AuthenticationService {
         try {
             log.info("Casdoor 预验证开始，用户名：{}，手机号：{}", loginName, phone);
 
-            org.casbin.casdoor.entity.User casdoorUser;
+            org.casbin.casdoor.entity.User casdoorUser = null;
             if (StringUtils.hasText(phone)) {
-                casdoorUser = casdoorUserExtendService.getUserByPhone(phone);
+                try {
+                    casdoorUser = casdoorUserExtendService.getUserByPhone(phone);
+                } catch (Exception e) {
+                    casdoorUser = null;
+                }
             } else {
                 // 1. 先走原始查找（兼容 built-in 组织用户如 admin）
-                casdoorUser = casdoorUserExtendService.getUser(loginName);
+                try {
+                    casdoorUser = casdoorUserExtendService.getUser(loginName);
+                } catch (Exception e) {
+                    casdoorUser = null;
+                }
                 // 2. 原始查找失败则跨组织搜索并用密码匹配唯一用户
                 if (casdoorUser == null || !StringUtils.hasText(casdoorUser.name)) {
                     casdoorUser = casdoorUserExtendService.findUserByNameAndPassword(
@@ -176,11 +184,9 @@ public class CasdoorAuthenticationServiceImpl implements AuthenticationService {
             String casdoorSessionId = loginResult.getSession();
             log.info("Casdoor登录成功，用户ID：{}，Session ID：{}", userIdForCasdoor, casdoorSessionId);
 
-            // 4. 通过用户姓名获取用户详细信息
-            String[] split = userIdForCasdoor.split("/");
-            String name = split.length > 1 ? split[1] : "";
-            org.casbin.casdoor.entity.User casdoorUser = casdoorUserExtendService.getUser(name);
-            if (casdoorUser == null) {
+            // 4. 通过用户ID获取用户详细信息（userId 已包含组织/用户名，避免 getUser 硬编码组织）
+            org.casbin.casdoor.entity.User casdoorUser = casdoorUserExtendService.getUserById(userIdForCasdoor);
+            if (casdoorUser == null || !StringUtils.hasText(casdoorUser.name)) {
                 throw new ServiceException("获取用户信息失败：用户不存在");
             }
 
@@ -257,10 +263,25 @@ public class CasdoorAuthenticationServiceImpl implements AuthenticationService {
                 try {
                     org.casbin.casdoor.entity.User casdoorUser = null;
                     if (StringUtils.hasText(loginDto.getLoginName())) {
-                        casdoorUser = casdoorUserExtendService.getUser(loginDto.getLoginName());
+                        try {
+                            casdoorUser = casdoorUserExtendService.getUser(loginDto.getLoginName());
+                        } catch (Exception e) {
+                            casdoorUser = null;
+                        }
+                        if (casdoorUser == null) {
+                            try {
+                                casdoorUser = casdoorUserExtendService.getUserAcrossOrgs(loginDto.getLoginName());
+                            } catch (Exception e) {
+                                casdoorUser = null;
+                            }
+                        }
                     }
                     if (casdoorUser == null && StringUtils.hasText(loginDto.getPhone())) {
-                        casdoorUser = casdoorUserExtendService.getUserByPhone(loginDto.getPhone());
+                        try {
+                            casdoorUser = casdoorUserExtendService.getUserByPhone(loginDto.getPhone());
+                        } catch (Exception e) {
+                            casdoorUser = null;
+                        }
                     }
                     if (casdoorUser != null && StringUtils.hasText(casdoorUser.owner)) {
                         userOrg = casdoorUser.owner;
@@ -372,8 +393,21 @@ public class CasdoorAuthenticationServiceImpl implements AuthenticationService {
         try {
             log.debug("查询用户是否存在，登录名：{}", loginName);
 
-            // 调用getUser查询用户是否存在
-            org.casbin.casdoor.entity.User user = casdoorUserExtendService.getUser(loginName);
+            // 调用getUser查询用户是否存在（built-in组织）
+            org.casbin.casdoor.entity.User user = null;
+            try {
+                user = casdoorUserExtendService.getUser(loginName);
+            } catch (Exception e) {
+                user = null;
+            }
+            // built-in 组织找不到时，跨组织查找
+            if (user == null || !StringUtils.hasText(user.name)) {
+                try {
+                    user = casdoorUserExtendService.getUserAcrossOrgs(loginName);
+                } catch (Exception e) {
+                    user = null;
+                }
+            }
             boolean exists = user != null && StringUtils.hasText(user.name);
 
             log.debug("用户存在性查询结果，登录名：{}，存在：{}", loginName, exists);
