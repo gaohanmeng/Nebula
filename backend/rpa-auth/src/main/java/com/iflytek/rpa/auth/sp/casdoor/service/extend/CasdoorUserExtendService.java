@@ -30,7 +30,7 @@ public class CasdoorUserExtendService extends UserService {
 
     public User getUserById(String id) throws IOException {
         CasdoorResponse<User, Object> resp =
-                doGet("get-user", Map.of("userId", id), new TypeReference<CasdoorResponse<User, Object>>() {});
+                doGet("get-user", Map.of("id", id), new TypeReference<CasdoorResponse<User, Object>>() {});
         return objectMapper.convertValue(resp.getData(), User.class);
     }
 
@@ -59,7 +59,7 @@ public class CasdoorUserExtendService extends UserService {
             for (Organization org : orgs) {
                 try {
                     CasdoorResponse<User, Object> resp = doGet("get-user",
-                            Map.of("userId", org.name + "/" + name),
+                            Map.of("id", org.name + "/" + name),
                             new TypeReference<CasdoorResponse<User, Object>>() {});
                     User user = objectMapper.convertValue(resp.getData(), User.class);
                     if (user != null && user.name != null) {

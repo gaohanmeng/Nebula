@@ -98,11 +98,13 @@ public class CasdoorAuthenticationServiceImpl implements AuthenticationService {
                         log.warn("Casdoor 预验证失败：账号不存在或密码错误，用户名：{}", loginName);
                         throw new ServiceException("账号或密码错误");
                     }
-                    // 跨组织匹配成功，密码已验证，直接返回临时凭证
+                    // 跨组织匹配成功，密码已验证，将组织名存入 loginDto
+                    loginDto.setTenantId(casdoorUser.owner);
+                    // 直接返回临时凭证
                     String tempToken2 = UUID.randomUUID().toString().replace("-", "");
                     String cacheKey2 = TEMP_TOKEN_PREFIX + tempToken2;
                     RedisUtils.set(cacheKey2, objectMapper.writeValueAsString(loginDto), TEMP_TOKEN_EXPIRE_SECONDS);
-                    log.info("Casdoor 预验证成功，用户名：{}，临时凭证已生成", loginName);
+                    log.info("Casdoor 预验证成功，用户名：{}，组织：{}，临时凭证已生成", loginName, casdoorUser.owner);
                     return tempToken2;
                 }
             }
