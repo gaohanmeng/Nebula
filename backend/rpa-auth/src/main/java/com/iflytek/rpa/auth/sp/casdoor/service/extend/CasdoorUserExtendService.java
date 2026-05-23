@@ -14,12 +14,14 @@ import org.casbin.casdoor.util.http.CasdoorResponse;
 import org.casbin.casdoor.util.http.HttpClient;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Service;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * @desc: 基于casdoor原生服务的用户拓展服务，仅在casdoor profile下生效
  * @author: weilai <laiwei3@iflytek.com>
  * @create: 2025/12/11 10:17
  */
+@Slf4j
 @Service
 @ConditionalOnProperty(name = "rpa.auth.deployment-mode", havingValue = "casdoor", matchIfMissing = true)
 public class CasdoorUserExtendService extends UserService {
