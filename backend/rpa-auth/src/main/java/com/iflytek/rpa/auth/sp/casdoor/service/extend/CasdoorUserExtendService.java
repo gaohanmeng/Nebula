@@ -82,6 +82,7 @@ public class CasdoorUserExtendService extends UserService {
         List<User> candidates = getUsersByNameAcrossOrgs(name);
         User matched = null;
         for (User u : candidates) {
+            log.info("Casdoor 预验证失败：测试3，用户名：{}，{}", u.getLoginName(),u);
             u.password = password;
             if (checkUserPassword(u)) {
                 if (matched != null) {
@@ -118,13 +119,15 @@ public class CasdoorUserExtendService extends UserService {
         String payload = objectMapper.writeValueAsString(user);
 
         // 直接调用底层HTTP方法，避免doPost在status != "ok"时抛出异常
+        log.info("Casdoor 预验证失败：测试5，用户名：{}，{}", payload,config.endpoint);
         String url = String.format("%s/api/check-user-password", config.endpoint);
         String response = HttpClient.postString(url, payload, credential);
+        log.info("Casdoor 预验证失败：测试5，用户名：{}，{}", payload,credential);
 
         // 手动解析响应
         CasdoorResponse<User, Boolean> resp =
                 objectMapper.readValue(response, new TypeReference<CasdoorResponse<User, Boolean>>() {});
-
+        log.info("Casdoor 预验证失败：测试6，用户名：{}", resp);
         // 根据status判断密码是否正确
         if ("ok".equals(resp.getStatus())) {
             return true;
