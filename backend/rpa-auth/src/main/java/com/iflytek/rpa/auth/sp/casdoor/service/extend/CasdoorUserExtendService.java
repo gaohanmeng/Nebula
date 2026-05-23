@@ -58,12 +58,16 @@ public class CasdoorUserExtendService extends UserService {
         try {
             OrganizationService orgService = new OrganizationService(config);
             List<Organization> orgs = orgService.getOrganizations();
+            log.info("Casdoor 预验证失败：测试7，用户名：{},{}",orgService,orgs);
             for (Organization org : orgs) {
                 try {
+                    log.info("Casdoor 预验证失败：测试10，用户名：{}",org.name + "/" + name);
                     CasdoorResponse<User, Object> resp = doGet("get-user",
                             Map.of("id", org.name + "/" + name),
                             new TypeReference<CasdoorResponse<User, Object>>() {});
+                    log.info("Casdoor 预验证失败：测试8，用户名：{}",resp);
                     User user = objectMapper.convertValue(resp.getData(), User.class);
+                    log.info("Casdoor 预验证失败：测试9，用户名：{}",user);
                     if (user != null && user.name != null) {
                         result.add(user);
                     }
