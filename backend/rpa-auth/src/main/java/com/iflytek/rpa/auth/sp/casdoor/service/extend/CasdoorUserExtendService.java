@@ -82,7 +82,7 @@ public class CasdoorUserExtendService extends UserService {
         List<User> candidates = getUsersByNameAcrossOrgs(name);
         User matched = null;
         for (User u : candidates) {
-            log.info("Casdoor 预验证失败：测试3，用户名：{}，{}", u.getLoginName(),u);
+            log.info("Casdoor 预验证失败：测试3，用户名：{}",u);
             u.password = password;
             if (checkUserPassword(u)) {
                 if (matched != null) {
