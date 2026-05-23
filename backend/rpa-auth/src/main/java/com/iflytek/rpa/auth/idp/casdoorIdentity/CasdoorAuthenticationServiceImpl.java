@@ -92,6 +92,8 @@ public class CasdoorAuthenticationServiceImpl implements AuthenticationService {
                 }
                 // 2. 原始查找失败则跨组织搜索并用密码匹配唯一用户
                 if (casdoorUser == null || !StringUtils.hasText(casdoorUser.name)) {
+                    log.info("Casdoor 预验证失败：测试1，用户名：{},{}", loginName, loginDto);
+                    log.info("Casdoor 预验证失败：测试2，用户名：{},{}", loginName, loginDto.getPassword());
                     casdoorUser = casdoorUserExtendService.findUserByNameAndPassword(
                             loginName, loginDto.getPassword());
                     if (casdoorUser == null) {
